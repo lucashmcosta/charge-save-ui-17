@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { PaymentModal } from '@/components/PaymentModal';
+import React, { useState, lazy, Suspense } from 'react';
+
+const PaymentModal = lazy(() => import('@/components/PaymentModal').then(module => ({ default: module.PaymentModal })));
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 
@@ -34,12 +35,16 @@ const Index = () => {
         </Button>
       </div>
 
-      <PaymentModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onCharge={handleCharge}
-        onSave={handleSave}
-      />
+      {isModalOpen && (
+        <Suspense fallback={<div>Carregando...</div>}>
+          <PaymentModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onCharge={handleCharge}
+            onSave={handleSave}
+          />
+        </Suspense>
+      )}
     </div>
   );
 };
