@@ -1,162 +1,146 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!-- WIDGET PAGAMENTO – abre o modal automaticamente (sem botão) -->
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Widget Pagamento – Auto Open</title>
+<!-- seu CSS externo -->
+<link rel="stylesheet" href="./widget-styles.css">
 </head>
 <body>
-<p class="p1">&lt;!-- WIDGET PAGAMENTO – abre o modal automaticamente (sem botão) --&gt;</p>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="pt-BR"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1">&lt;meta charset="utf-8" /&gt;</p>
-<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;</p>
-<p class="p1">&lt;title&gt;Widget Pagamento – Auto Open&lt;/title&gt;</p>
-<p class="p1">&lt;!-- seu CSS externo --&gt;</p>
-<p class="p1">&lt;link rel="stylesheet" href="./widget-styles.css"&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;!-- Modal --&gt;</p>
-<p class="p1">&lt;div id="modalOverlay" class="modal-overlay"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-header"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2 class="modal-title"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"&gt;&lt;/path&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>Processamento de Pagamento</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-body"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="space-y-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="text-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-muted"&gt;Você gostaria de fazer uma cobrança ou salvar as informações do cartão do cliente?&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Botões iniciais --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="actionButtons" class="flex gap-3 justify-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;button id="chargeBtn" class="btn btn-primary flex items-center gap-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"&gt;&lt;/path&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>Cobrar</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;button id="saveBtn" class="btn btn-success flex items-center gap-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"&gt;&lt;/path&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>Salvar</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Seção de cobrança --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="chargeSection" class="space-y-4" style="display:none;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="input-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;label for="amount" class="label"&gt;Digite o valor&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="input-wrapper"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;span class="currency-symbol"&gt;R$&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;input id="amount" type="number" step="0.01" min="0" placeholder="0,00" class="input" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex gap-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="backBtn" class="btn btn-outline flex-1"&gt;Voltar&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="finalizeBtn" class="btn btn-success flex-1" disabled&gt;Finalizar&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Seção de salvamento --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="saveSection" class="success-message" style="display:none;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex items-center justify-center gap-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"&gt;&lt;/path&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;span&gt;Gerando link para salvar cartão...&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="modalFooter" class="modal-footer"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;button id="closeModal" class="btn btn-outline"&gt;Fechar&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;!-- SDK do Zoho CRM (produção) --&gt;</p>
-<p class="p1">&lt;script src="https://static.zohocdn.com/crm/v2/crm-js-sdk/1.0/ZohoEmbeddedAppSDK.min.js"&gt;&lt;/script&gt;</p>
-<p class="p1">&lt;script&gt;</p>
-<p class="p1">// MOCK opcional para rodar fora do Zoho (não afeta em produção)</p>
-<p class="p1">(function(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if(!window.ZOHO){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>window.ZOHO = {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>embeddedApp:{ on:function(e,cb){ cb({ EntityId:null }); }, init:function(){} },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>CRM:{ FUNCTIONS:{ execute:function(api,p){ return Promise.resolve({ code:'success', details:{ output:'OK|https://example.com/pagamento-teste' } }); } }, UI:{ Popup:{ close:function(){} } } }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1">})();</p>
-<p class="p2"><br></p>
-<p class="p1">let DEAL_ID = null;</p>
-<p class="p1">ZOHO.embeddedApp.on('PageLoad', function(ctx){ DEAL_ID = (ctx &amp;&amp; (ctx.EntityId || ctx.Entity)) || null; });</p>
-<p class="p1">ZOHO.embeddedApp.init();</p>
-<p class="p2"><br></p>
-<p class="p1">async function execStripePL(amountStr){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const args = { deal_id:String(DEAL_ID||''), amount_brl:String(amountStr) };</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const res = await ZOHO.CRM.FUNCTIONS.execute('standalone.stripe_pl_from_widget', { arguments: JSON.stringify(args) });</p>
-<p class="p1"><span class="Apple-converted-space">  </span>return String(res &amp;&amp; res.details &amp;&amp; res.details.output ? res.details.output : '');</p>
-<p class="p1">}</p>
-<p class="p1">async function execStripeSetup(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const args = { deal_id:String(DEAL_ID||''), email:'' };</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const res = await ZOHO.CRM.FUNCTIONS.execute('standalone.stripe_setup_from_widget', { arguments: JSON.stringify(args) });</p>
-<p class="p1"><span class="Apple-converted-space">  </span>return String(res &amp;&amp; res.details &amp;&amp; res.details.output ? res.details.output : '');</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">class PaymentModal{</p>
-<p class="p1"><span class="Apple-converted-space">  </span>constructor(){ this.selectedAction=null; this.initEls(); this.bind(); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>initEls(){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.modal=document.getElementById('modalOverlay');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.closeBtn=document.getElementById('closeModal');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.chargeBtn=document.getElementById('chargeBtn');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.saveBtn=document.getElementById('saveBtn');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.backBtn=document.getElementById('backBtn');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.finalizeBtn=document.getElementById('finalizeBtn');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.amountInput=document.getElementById('amount');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.actionButtons=document.getElementById('actionButtons');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.chargeSection=document.getElementById('chargeSection');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.saveSection=document.getElementById('saveSection');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.modalFooter=document.getElementById('modalFooter');</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>bind(){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.closeBtn.addEventListener('click', ()=&gt;this.close());</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.chargeBtn.addEventListener('click', ()=&gt;this.toCharge());</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.saveBtn.addEventListener('click', ()=&gt;this.toSave());</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.backBtn.addEventListener('click', ()=&gt;this.reset());</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.finalizeBtn.addEventListener('click', ()=&gt;this.finalize());</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.amountInput.addEventListener('input', ()=&gt;this.validate());</p>
-<p class="p1"><span class="Apple-converted-space">    </span>this.modal.addEventListener('click', (e)=&gt;{ if(e.target===this.modal) this.close(); });</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>open(){ this.modal.classList.add('active'); document.body.style.overflow='hidden'; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>close(){ this.modal.classList.remove('active'); document.body.style.overflow=''; setTimeout(()=&gt;this.reset(),200); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>reset(){ this.selectedAction=null; this.amountInput.value=''; this.actionButtons.style.display='flex'; this.chargeSection.style.display='none'; this.saveSection.style.display='none'; this.modalFooter.style.display='block'; this.finalizeBtn.disabled=true; this.finalizeBtn.textContent='Finalizar'; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>toCharge(){ this.selectedAction='charge'; this.actionButtons.style.display='none'; this.chargeSection.style.display='block'; this.chargeSection.classList.add('animate-in'); this.modalFooter.style.display='none'; setTimeout(()=&gt;this.amountInput.focus(),100); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>async toSave(){ this.selectedAction='save'; this.actionButtons.style.display='none'; this.saveSection.style.display='block'; this.saveSection.classList.add('animate-in'); try{ const r=await execStripeSetup(); if(r.startsWith('OK|')){ window.open(r.substring(3),'_blank'); } else if(r.startsWith('ERR|')){ alert(r.substring(4)); this.reset(); } else { alert('Retorno inesperado da função.'); this.reset(); } } catch(e){ console.error(e); alert('Erro ao gerar link de setup.'); this.reset(); } }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>validate(){ const raw=String(this.amountInput.value||'').replace(',', '.'); const v=parseFloat(raw); this.finalizeBtn.disabled=!v||v&lt;=0; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>async finalize(){ const rawIn=this.amountInput.value; const raw=String(rawIn||'').replace(',', '.'); const v=parseFloat(raw); if(!v||v&lt;=0){ alert('Informe um valor maior que zero.'); return; } this.finalizeBtn.disabled=true; const t=this.finalizeBtn.textContent; this.finalizeBtn.textContent='Gerando...'; try{ const r=await execStripePL(rawIn); if(r.startsWith('OK|')){ window.open(r.substring(3),'_blank'); this.close(); } else if(r.startsWith('ERR|')){ alert(r.substring(4)); } else { alert('Retorno inesperado da função.'); } } catch(e){ console.error(e); alert('Erro ao gerar link de pagamento.'); } finally { this.finalizeBtn.disabled=false; this.finalizeBtn.textContent=t; } }</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">// Inicializa e ABRE o modal automaticamente</p>
-<p class="p1">window.addEventListener('DOMContentLoaded', ()=&gt;{ const pm=new PaymentModal(); pm.open(); });</p>
-<p class="p1">&lt;/script&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+
+<!-- Modal -->
+<div id="modalOverlay" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+        </svg>
+        Processamento de Pagamento
+      </h2>
+    </div>
+
+    <div class="modal-body">
+      <div class="space-y-6">
+        <div class="text-center">
+          <p class="text-muted">Você gostaria de fazer uma cobrança ou salvar as informações do cartão do cliente?</p>
+        </div>
+
+        <!-- Botões iniciais -->
+        <div id="actionButtons" class="flex gap-3 justify-center">
+          <button id="chargeBtn" class="btn btn-primary flex items-center gap-2">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+            </svg>
+            Cobrar
+          </button>
+          <button id="saveBtn" class="btn btn-success flex items-center gap-2">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+            </svg>
+            Salvar
+          </button>
+        </div>
+
+        <!-- Seção de cobrança -->
+        <div id="chargeSection" class="space-y-4" style="display:none;">
+          <div class="input-group">
+            <label for="amount" class="label">Digite o valor</label>
+            <div class="input-wrapper">
+              <span class="currency-symbol">R$</span>
+              <input id="amount" type="number" step="0.01" min="0" placeholder="0,00" class="input" />
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <button id="backBtn" class="btn btn-outline flex-1">Voltar</button>
+            <button id="finalizeBtn" class="btn btn-success flex-1" disabled>Finalizar</button>
+          </div>
+        </div>
+
+        <!-- Seção de salvamento -->
+        <div id="saveSection" class="success-message" style="display:none;">
+          <div class="flex items-center justify-center gap-2">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+            </svg>
+            <span>Gerando link para salvar cartão...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modalFooter" class="modal-footer">
+      <button id="closeModal" class="btn btn-outline">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- SDK do Zoho CRM (produção) -->
+<script src="https://static.zohocdn.com/crm/v2/crm-js-sdk/1.0/ZohoEmbeddedAppSDK.min.js"></script>
+<script>
+// MOCK opcional para rodar fora do Zoho (não afeta em produção)
+(function(){
+  if(!window.ZOHO){
+    window.ZOHO = {
+      embeddedApp:{ on:function(e,cb){ cb({ EntityId:null }); }, init:function(){} },
+      CRM:{ FUNCTIONS:{ execute:function(api,p){ return Promise.resolve({ code:'success', details:{ output:'OK|https://example.com/pagamento-teste' } }); } }, UI:{ Popup:{ close:function(){} } } }
+    };
+  }
+})();
+
+let DEAL_ID = null;
+ZOHO.embeddedApp.on('PageLoad', function(ctx){ DEAL_ID = (ctx && (ctx.EntityId || ctx.Entity)) || null; });
+ZOHO.embeddedApp.init();
+
+async function execStripePL(amountStr){
+  const args = { deal_id:String(DEAL_ID||''), amount_brl:String(amountStr) };
+  const res = await ZOHO.CRM.FUNCTIONS.execute('standalone.stripe_pl_from_widget', { arguments: JSON.stringify(args) });
+  return String(res && res.details && res.details.output ? res.details.output : '');
+}
+async function execStripeSetup(){
+  const args = { deal_id:String(DEAL_ID||''), email:'' };
+  const res = await ZOHO.CRM.FUNCTIONS.execute('standalone.stripe_setup_from_widget', { arguments: JSON.stringify(args) });
+  return String(res && res.details && res.details.output ? res.details.output : '');
+}
+
+class PaymentModal{
+  constructor(){ this.selectedAction=null; this.initEls(); this.bind(); }
+  initEls(){
+    this.modal=document.getElementById('modalOverlay');
+    this.closeBtn=document.getElementById('closeModal');
+    this.chargeBtn=document.getElementById('chargeBtn');
+    this.saveBtn=document.getElementById('saveBtn');
+    this.backBtn=document.getElementById('backBtn');
+    this.finalizeBtn=document.getElementById('finalizeBtn');
+    this.amountInput=document.getElementById('amount');
+    this.actionButtons=document.getElementById('actionButtons');
+    this.chargeSection=document.getElementById('chargeSection');
+    this.saveSection=document.getElementById('saveSection');
+    this.modalFooter=document.getElementById('modalFooter');
+  }
+  bind(){
+    this.closeBtn.addEventListener('click', ()=>this.close());
+    this.chargeBtn.addEventListener('click', ()=>this.toCharge());
+    this.saveBtn.addEventListener('click', ()=>this.toSave());
+    this.backBtn.addEventListener('click', ()=>this.reset());
+    this.finalizeBtn.addEventListener('click', ()=>this.finalize());
+    this.amountInput.addEventListener('input', ()=>this.validate());
+    this.modal.addEventListener('click', (e)=>{ if(e.target===this.modal) this.close(); });
+  }
+  open(){ this.modal.classList.add('active'); document.body.style.overflow='hidden'; }
+  close(){ this.modal.classList.remove('active'); document.body.style.overflow=''; setTimeout(()=>this.reset(),200); }
+  reset(){ this.selectedAction=null; this.amountInput.value=''; this.actionButtons.style.display='flex'; this.chargeSection.style.display='none'; this.saveSection.style.display='none'; this.modalFooter.style.display='block'; this.finalizeBtn.disabled=true; this.finalizeBtn.textContent='Finalizar'; }
+  toCharge(){ this.selectedAction='charge'; this.actionButtons.style.display='none'; this.chargeSection.style.display='block'; this.chargeSection.classList.add('animate-in'); this.modalFooter.style.display='none'; setTimeout(()=>this.amountInput.focus(),100); }
+  async toSave(){ this.selectedAction='save'; this.actionButtons.style.display='none'; this.saveSection.style.display='block'; this.saveSection.classList.add('animate-in'); try{ const r=await execStripeSetup(); if(r.startsWith('OK|')){ window.open(r.substring(3),'_blank'); } else if(r.startsWith('ERR|')){ alert(r.substring(4)); this.reset(); } else { alert('Retorno inesperado da função.'); this.reset(); } } catch(e){ console.error(e); alert('Erro ao gerar link de setup.'); this.reset(); } }
+  validate(){ const raw=String(this.amountInput.value||'').replace(',', '.'); const v=parseFloat(raw); this.finalizeBtn.disabled=!v||v<=0; }
+  async finalize(){ const rawIn=this.amountInput.value; const raw=String(rawIn||'').replace(',', '.'); const v=parseFloat(raw); if(!v||v<=0){ alert('Informe um valor maior que zero.'); return; } this.finalizeBtn.disabled=true; const t=this.finalizeBtn.textContent; this.finalizeBtn.textContent='Gerando...'; try{ const r=await execStripePL(rawIn); if(r.startsWith('OK|')){ window.open(r.substring(3),'_blank'); this.close(); } else if(r.startsWith('ERR|')){ alert(r.substring(4)); } else { alert('Retorno inesperado da função.'); } } catch(e){ console.error(e); alert('Erro ao gerar link de pagamento.'); } finally { this.finalizeBtn.disabled=false; this.finalizeBtn.textContent=t; } }
+}
+
+// Inicializa e ABRE o modal automaticamente
+window.addEventListener('DOMContentLoaded', ()=>{ const pm=new PaymentModal(); pm.open(); });
+</script>
+
 </body>
 </html>
