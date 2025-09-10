@@ -1,456 +1,147 @@
+
+<!-- WIDGET PAGAMENTO – abre o modal automaticamente (sem botão) -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modal CRM - Pagamento</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #ffffff;
-            color: #09090b;
-            line-height: 1.5;
-        }
-
-        .container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .content {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 24px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s;
-            cursor: pointer;
-            border: none;
-            padding: 12px 24px;
-            min-height: 44px;
-        }
-
-        .btn-primary {
-            background-color: hsl(217, 91%, 60%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: hsl(217, 91%, 55%);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid hsl(214.3, 31.8%, 91.4%);
-            color: hsl(222.2, 84%, 4.9%);
-        }
-
-        .btn-outline:hover {
-            background-color: hsl(210, 40%, 96.1%);
-        }
-
-        .btn-success {
-            background-color: hsl(142, 76%, 36%);
-            color: white;
-            border: 1px solid hsl(142, 76%, 36%);
-        }
-
-        .btn-success:hover {
-            background-color: hsl(142, 76%, 32%);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 50;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            width: 100%;
-            max-width: 400px;
-            margin: 20px;
-            transform: scale(0.95);
-            transition: transform 0.2s;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
-
-        .modal-header {
-            padding: 24px 24px 0 24px;
-        }
-
-        .modal-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
-        .modal-body {
-            padding: 24px;
-        }
-
-        .modal-footer {
-            padding: 0 24px 24px 24px;
-        }
-
-        .icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        .text-muted {
-            color: hsl(215.4, 16.3%, 46.9%);
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .space-y-6 > * + * {
-            margin-top: 24px;
-        }
-
-        .space-y-4 > * + * {
-            margin-top: 16px;
-        }
-
-        .flex {
-            display: flex;
-        }
-
-        .items-center {
-            align-items: center;
-        }
-
-        .justify-center {
-            justify-content: center;
-        }
-
-        .gap-2 {
-            gap: 8px;
-        }
-
-        .gap-3 {
-            gap: 12px;
-        }
-
-        .input-group {
-            padding: 16px;
-            background-color: hsl(210, 40%, 98%);
-            border-radius: 8px;
-            border: 1px solid hsl(217, 91%, 90%);
-        }
-
-        .label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input {
-            width: 100%;
-            padding: 12px 12px 12px 40px;
-            border: 1px solid hsl(214.3, 31.8%, 91.4%);
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .input:focus {
-            outline: none;
-            border-color: hsl(217, 91%, 60%);
-            box-shadow: 0 0 0 2px hsl(217, 91%, 60%, 0.2);
-        }
-
-        .currency-symbol {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: hsl(215.4, 16.3%, 46.9%);
-        }
-
-        .success-message {
-            text-align: center;
-            padding: 16px;
-            background-color: hsl(142, 76%, 95%);
-            border-radius: 8px;
-            border: 1px solid hsl(142, 76%, 80%);
-            color: hsl(142, 76%, 36%);
-        }
-
-        .animate-in {
-            animation: slideInFromTop 0.3s ease-out;
-        }
-
-        @keyframes slideInFromTop {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .flex-1 {
-            flex: 1;
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Widget Pagamento – Auto Open</title>
+<!-- seu CSS externo -->
+<link rel="stylesheet" href="./widget-styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="content">
-            <h1 class="title">Teste do Modal CRM</h1>
-            <button id="openModal" class="btn btn-primary">
-                Abrir Modal de Pagamento
-            </button>
-        </div>
+
+<!-- Modal -->
+<div id="modalOverlay" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+        </svg>
+        Processamento de Pagamento
+      </h2>
     </div>
 
-    <!-- Modal -->
-    <div id="modalOverlay" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-                    </svg>
-                    Processamento de Pagamento
-                </h2>
-            </div>
-
-            <div class="modal-body">
-                <div class="space-y-6">
-                    <div class="text-center">
-                        <p class="text-muted">
-                            Você gostaria de fazer uma cobrança ou salvar as informações do cartão do cliente?
-                        </p>
-                    </div>
-
-                    <div id="actionButtons" class="flex gap-3 justify-center">
-                        <button id="chargeBtn" class="btn btn-primary flex items-center gap-2">
-                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-                            </svg>
-                            Cobrar
-                        </button>
-                        <button id="saveBtn" class="btn btn-success flex items-center gap-2">
-                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
-                            </svg>
-                            Salvar
-                        </button>
-                    </div>
-
-                    <div id="chargeSection" class="space-y-4" style="display: none;">
-                        <div class="input-group">
-                            <label for="amount" class="label">Digite o valor</label>
-                            <div class="input-wrapper">
-                                <span class="currency-symbol">R$</span>
-                                <input 
-                                    id="amount" 
-                                    type="number" 
-                                    step="0.01" 
-                                    min="0" 
-                                    placeholder="0,00" 
-                                    class="input"
-                                />
-                            </div>
-                        </div>
-                        
-                        <div class="flex gap-2">
-                            <button id="backBtn" class="btn btn-outline flex-1">
-                                Voltar
-                            </button>
-                            <button id="finalizeBtn" class="btn btn-success flex-1" disabled>
-                                Finalizar
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="saveSection" class="success-message" style="display: none;">
-                        <div class="flex items-center justify-center gap-2">
-                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
-                            </svg>
-                            <span>Informações salvas com sucesso!</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="modalFooter" class="modal-footer">
-                <button id="closeModal" class="btn btn-outline">
-                    Fechar
-                </button>
-            </div>
+    <div class="modal-body">
+      <div class="space-y-6">
+        <div class="text-center">
+          <p class="text-muted">Você gostaria de fazer uma cobrança ou salvar as informações do cartão do cliente?</p>
         </div>
+
+        <!-- Botões iniciais -->
+        <div id="actionButtons" class="flex gap-3 justify-center">
+          <button id="chargeBtn" class="btn btn-primary flex items-center gap-2">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+            </svg>
+            Cobrar
+          </button>
+          <button id="saveBtn" class="btn btn-success flex items-center gap-2">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+            </svg>
+            Salvar
+          </button>
+        </div>
+
+        <!-- Seção de cobrança -->
+        <div id="chargeSection" class="space-y-4" style="display:none;">
+          <div class="input-group">
+            <label for="amount" class="label">Digite o valor</label>
+            <div class="input-wrapper">
+              <span class="currency-symbol">R$</span>
+              <input id="amount" type="number" step="0.01" min="0" placeholder="0,00" class="input" />
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <button id="backBtn" class="btn btn-outline flex-1">Voltar</button>
+            <button id="finalizeBtn" class="btn btn-success flex-1" disabled>Finalizar</button>
+          </div>
+        </div>
+
+        <!-- Seção de salvamento -->
+        <div id="saveSection" class="success-message" style="display:none;">
+          <div class="flex items-center justify-center gap-2">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+            </svg>
+            <span>Gerando link para salvar cartão...</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script>
-        class PaymentModal {
-            constructor() {
-                this.selectedAction = null;
-                this.initializeElements();
-                this.bindEvents();
-            }
+    <div id="modalFooter" class="modal-footer">
+      <button id="closeModal" class="btn btn-outline">Fechar</button>
+    </div>
+  </div>
+</div>
 
-            initializeElements() {
-                this.modal = document.getElementById('modalOverlay');
-                this.openBtn = document.getElementById('openModal');
-                this.closeBtn = document.getElementById('closeModal');
-                this.chargeBtn = document.getElementById('chargeBtn');
-                this.saveBtn = document.getElementById('saveBtn');
-                this.backBtn = document.getElementById('backBtn');
-                this.finalizeBtn = document.getElementById('finalizeBtn');
-                this.amountInput = document.getElementById('amount');
-                
-                this.actionButtons = document.getElementById('actionButtons');
-                this.chargeSection = document.getElementById('chargeSection');
-                this.saveSection = document.getElementById('saveSection');
-                this.modalFooter = document.getElementById('modalFooter');
-            }
+<!-- SDK do Zoho CRM (produção) -->
+<script src="https://static.zohocdn.com/crm/v2/crm-js-sdk/1.0/ZohoEmbeddedAppSDK.min.js"></script>
+<script>
+// MOCK opcional para rodar fora do Zoho (não afeta em produção)
+(function(){
+  if(!window.ZOHO){
+    window.ZOHO = {
+      embeddedApp:{ on:function(e,cb){ cb({ EntityId:null }); }, init:function(){} },
+      CRM:{ FUNCTIONS:{ execute:function(api,p){ return Promise.resolve({ code:'success', details:{ output:'OK|https://example.com/pagamento-teste' } }); } }, UI:{ Popup:{ close:function(){} } } }
+    };
+  }
+})();
 
-            bindEvents() {
-                this.openBtn.addEventListener('click', () => this.openModal());
-                this.closeBtn.addEventListener('click', () => this.closeModal());
-                this.chargeBtn.addEventListener('click', () => this.handleChargeClick());
-                this.saveBtn.addEventListener('click', () => this.handleSaveClick());
-                this.backBtn.addEventListener('click', () => this.handleReset());
-                this.finalizeBtn.addEventListener('click', () => this.handleFinalize());
-                this.amountInput.addEventListener('input', () => this.validateAmount());
-                
-                // Close modal when clicking overlay
-                this.modal.addEventListener('click', (e) => {
-                    if (e.target === this.modal) {
-                        this.closeModal();
-                    }
-                });
-            }
+let DEAL_ID = null;
+ZOHO.embeddedApp.on('PageLoad', function(ctx){ DEAL_ID = (ctx && (ctx.EntityId || ctx.Entity)) || null; });
+ZOHO.embeddedApp.init();
 
-            openModal() {
-                this.modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
+async function execStripePL(amountStr){
+  const args = { deal_id:String(DEAL_ID||''), amount_brl:String(amountStr) };
+  const res = await ZOHO.CRM.FUNCTIONS.execute('standalone.stripe_pl_from_widget', { arguments: JSON.stringify(args) });
+  return String(res && res.details && res.details.output ? res.details.output : '');
+}
+async function execStripeSetup(){
+  const args = { deal_id:String(DEAL_ID||''), email:'' };
+  const res = await ZOHO.CRM.FUNCTIONS.execute('standalone.stripe_setup_from_widget', { arguments: JSON.stringify(args) });
+  return String(res && res.details && res.details.output ? res.details.output : '');
+}
 
-            closeModal() {
-                this.modal.classList.remove('active');
-                document.body.style.overflow = '';
-                setTimeout(() => this.handleReset(), 200);
-            }
+class PaymentModal{
+  constructor(){ this.selectedAction=null; this.initEls(); this.bind(); }
+  initEls(){
+    this.modal=document.getElementById('modalOverlay');
+    this.closeBtn=document.getElementById('closeModal');
+    this.chargeBtn=document.getElementById('chargeBtn');
+    this.saveBtn=document.getElementById('saveBtn');
+    this.backBtn=document.getElementById('backBtn');
+    this.finalizeBtn=document.getElementById('finalizeBtn');
+    this.amountInput=document.getElementById('amount');
+    this.actionButtons=document.getElementById('actionButtons');
+    this.chargeSection=document.getElementById('chargeSection');
+    this.saveSection=document.getElementById('saveSection');
+    this.modalFooter=document.getElementById('modalFooter');
+  }
+  bind(){
+    this.closeBtn.addEventListener('click', ()=>this.close());
+    this.chargeBtn.addEventListener('click', ()=>this.toCharge());
+    this.saveBtn.addEventListener('click', ()=>this.toSave());
+    this.backBtn.addEventListener('click', ()=>this.reset());
+    this.finalizeBtn.addEventListener('click', ()=>this.finalize());
+    this.amountInput.addEventListener('input', ()=>this.validate());
+    this.modal.addEventListener('click', (e)=>{ if(e.target===this.modal) this.close(); });
+  }
+  open(){ this.modal.classList.add('active'); document.body.style.overflow='hidden'; }
+  close(){ this.modal.classList.remove('active'); document.body.style.overflow=''; setTimeout(()=>this.reset(),200); }
+  reset(){ this.selectedAction=null; this.amountInput.value=''; this.actionButtons.style.display='flex'; this.chargeSection.style.display='none'; this.saveSection.style.display='none'; this.modalFooter.style.display='block'; this.finalizeBtn.disabled=true; this.finalizeBtn.textContent='Finalizar'; }
+  toCharge(){ this.selectedAction='charge'; this.actionButtons.style.display='none'; this.chargeSection.style.display='block'; this.chargeSection.classList.add('animate-in'); this.modalFooter.style.display='none'; setTimeout(()=>this.amountInput.focus(),100); }
+  async toSave(){ this.selectedAction='save'; this.actionButtons.style.display='none'; this.saveSection.style.display='block'; this.saveSection.classList.add('animate-in'); try{ const r=await execStripeSetup(); if(r.startsWith('OK|')){ window.open(r.substring(3),'_blank'); } else if(r.startsWith('ERR|')){ alert(r.substring(4)); this.reset(); } else { alert('Retorno inesperado da função.'); this.reset(); } } catch(e){ console.error(e); alert('Erro ao gerar link de setup.'); this.reset(); } }
+  validate(){ const raw=String(this.amountInput.value||'').replace(',', '.'); const v=parseFloat(raw); this.finalizeBtn.disabled=!v||v<=0; }
+  async finalize(){ const rawIn=this.amountInput.value; const raw=String(rawIn||'').replace(',', '.'); const v=parseFloat(raw); if(!v||v<=0){ alert('Informe um valor maior que zero.'); return; } this.finalizeBtn.disabled=true; const t=this.finalizeBtn.textContent; this.finalizeBtn.textContent='Gerando...'; try{ const r=await execStripePL(rawIn); if(r.startsWith('OK|')){ window.open(r.substring(3),'_blank'); this.close(); } else if(r.startsWith('ERR|')){ alert(r.substring(4)); } else { alert('Retorno inesperado da função.'); } } catch(e){ console.error(e); alert('Erro ao gerar link de pagamento.'); } finally { this.finalizeBtn.disabled=false; this.finalizeBtn.textContent=t; } }
+}
 
-            handleReset() {
-                this.selectedAction = null;
-                this.amountInput.value = '';
-                
-                this.actionButtons.style.display = 'flex';
-                this.chargeSection.style.display = 'none';
-                this.saveSection.style.display = 'none';
-                this.modalFooter.style.display = 'block';
-                
-                this.finalizeBtn.disabled = true;
-            }
+// Inicializa e ABRE o modal automaticamente
+window.addEventListener('DOMContentLoaded', ()=>{ const pm=new PaymentModal(); pm.open(); });
+</script>
 
-            handleChargeClick() {
-                this.selectedAction = 'charge';
-                this.actionButtons.style.display = 'none';
-                this.chargeSection.style.display = 'block';
-                this.chargeSection.classList.add('animate-in');
-                this.modalFooter.style.display = 'none';
-                
-                setTimeout(() => {
-                    this.amountInput.focus();
-                }, 100);
-            }
-
-            handleSaveClick() {
-                this.selectedAction = 'save';
-                this.actionButtons.style.display = 'none';
-                this.saveSection.style.display = 'block';
-                this.saveSection.classList.add('animate-in');
-                
-                // Aqui você pode chamar sua função personalizada
-                console.log('Função de salvar chamada!');
-                
-                // Simula uma ação assíncrona
-                setTimeout(() => {
-                    // Aqui você pode adicionar sua lógica personalizada
-                    alert('Informações do cartão salvas com sucesso!');
-                }, 1000);
-            }
-
-            validateAmount() {
-                const value = parseFloat(this.amountInput.value);
-                this.finalizeBtn.disabled = !value || value <= 0;
-            }
-
-            handleFinalize() {
-                const amount = this.amountInput.value;
-                if (amount && parseFloat(amount) > 0) {
-                    alert(`Cobrança de R$ ${amount} processada com sucesso!`);
-                    this.closeModal();
-                }
-            }
-        }
-
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            new PaymentModal();
-        });
-    </script>
 </body>
 </html>
